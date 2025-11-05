@@ -22,7 +22,7 @@ pipeline {
                 script {
                     // Jenkins workspace ka path le lo
                     def workspace = env.WORKSPACE
-                    def headerFile = "${workspace}/application/views/header.php"
+                    def headerFile = "${workspace}/app/Views/partial/header.php"
 
                     // File exist check
                     if (fileExists(headerFile)) {
