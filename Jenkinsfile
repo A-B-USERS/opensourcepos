@@ -7,7 +7,17 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/A-B-USERS/opensourcepos.git'
             }
         }
+     
+        stage('Update Branding') {
+            steps {
+                // Replace "opensourcePOS" with "ITSW" in your header file (adjust path if needed)
+                sh 'sed -i "s/opensourcePOS/ITSW/g" application/views/header.php'
+             }
+         }
 
+
+
+        
         stage('Build & Deploy') {
             steps {
                 sh 'docker compose down'
