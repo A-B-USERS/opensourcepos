@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo "🔄 Checking out the repository..."
+                echo " Checking out the repository..."
                 git branch: 'master', url: 'https://github.com/A-B-USERS/opensourcepos.git'
             }
         }
@@ -26,7 +26,7 @@ pipeline {
 
                     // Check karo file exist karti hai ya nahi
                     if (fileExists(headerFile)) {
-                        echo "✏️ Updating branding in header.php..."
+                        echo " Updating branding in header.php..."
                         sh "sed -i 's/opensourcePOS/ITSW/g' ${headerFile}"
                     } else {
                         error "❌ File not found: ${headerFile}"
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     def workspace = env.WORKSPACE
-                    echo "🚀 Building and deploying Docker containers..."
+                    echo " Building and deploying Docker containers..."
                     dir("${workspace}") {
                         // Safe docker compose down (agar containers run nahi ho rahe toh error na aaye)
                         sh 'docker compose down || true'
@@ -51,7 +51,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo "🧪 Running post-deployment checks..."
+                echo " Running post-deployment checks..."
                 sh 'echo "✅ POS system deployed successfully! Add automated tests here if needed."'
             }
         }
@@ -59,4 +59,4 @@ pipeline {
 
     post {
         success {
-            echo "🎉 Deployment completed succ
+            echo " Deployment completed succ
