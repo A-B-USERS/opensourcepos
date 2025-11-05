@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo " Checking out the repository..."
+                echo "🔄 Checking out the repository..."
                 git branch: 'master', url: 'https://github.com/A-B-USERS/opensourcepos.git'
             }
         }
@@ -24,9 +24,9 @@ pipeline {
                     def workspace = env.WORKSPACE
                     def headerFile = "${workspace}/application/views/header.php"
 
-                    // Check karo file exist karti hai ya nahi
+                    // File exist check
                     if (fileExists(headerFile)) {
-                        echo " Updating branding in header.php..."
+                        echo "✏️ Updating branding in header.php..."
                         sh "sed -i 's/opensourcePOS/ITSW/g' ${headerFile}"
                     } else {
                         error "❌ File not found: ${headerFile}"
@@ -39,10 +39,9 @@ pipeline {
             steps {
                 script {
                     def workspace = env.WORKSPACE
-                    echo " Building and deploying Docker containers..."
+                    echo "🚀 Building and deploying Docker containers..."
                     dir("${workspace}") {
-                        // Safe docker compose down (agar containers run nahi ho rahe toh error na aaye)
-                        sh 'docker compose down || true'
+                        sh 'docker compose down || true'  // safe if no containers running
                         sh 'docker compose up -d --build'
                     }
                 }
@@ -51,12 +50,18 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo " Running post-deployment checks..."
-                sh 'echo "✅ POS system deployed successfully! Add automated tests here if needed."'
+                echo "🧪 Running post-deployment checks..."
+                sh 'echo "POS system deployed successfully! Add automated tests here if needed."'
             }
         }
     }
 
     post {
         success {
-            echo " Deployment completed succ
+            echo "Deployment completed successfully!"  // emoji removed for safety
+        }
+        failure {
+            echo "Deployment failed! Check the logs for details."
+        }
+    }
+}
